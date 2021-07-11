@@ -41,7 +41,9 @@
               :aria-label="`Deselect ${getOptionLabel(option)}`"
               @click="deselect(option)"
             >
-              <component :is="childComponents.Deselect" />
+              <slot name="deselect">
+                <component :is="childComponents.Deselect" />
+              </slot>
             </button>
           </span>
         </slot>
@@ -66,7 +68,9 @@
           aria-label="Clear Selected"
           @click="clearSelection"
         >
-          <component :is="childComponents.Deselect" />
+          <slot name="deselect">
+            <component :is="childComponents.Deselect" />
+          </slot>
         </button>
 
         <slot name="open-indicator" v-bind="scope.openIndicator">
@@ -111,7 +115,7 @@
           }"
           :aria-selected="index === typeAheadPointer ? true : null"
           @mouseover="selectable(option) ? (typeAheadPointer = index) : null"
-          @click.prevent.stop="selectable(option) ? select(option) : null"
+          @mouseup.prevent.stop="selectable(option) ? select(option) : null"
         >
           <slot name="option" v-bind="normalizeOptionForSlot(option)">
             {{ getOptionLabel(option) }}
@@ -121,19 +125,23 @@
           <slot name="no-options" v-bind="scope.noOptions">
             Sorry, no matching options.
           </slot>
-        </li>
-        <slot name="list-footer" v-bind="scope.listFooter" />
-      </ul>
-      <ul
-        v-else
-        :id="`vs${uid}__listbox`"
-        role="listbox"
-        style="display: none; visibility: hidden"
-      ></ul>
-    </transition>
-    <slot name="footer" v-bind="scope.footer" />
-  </div>
+				</li>
+				<slot
+					name="list-footer"
+					v-bind="scope.listFooter" />
+			</ul>
+			<ul
+				v-else
+				:id="`vs${uid}__listbox`"
+				role="listbox"
+				style="display: none; visibility: hidden" />
+		</transition>
+		<slot
+			name="footer"
+			v-bind="scope.footer" />
+	</div>
 </template>
+
 
 <script>
 import pointerScroll from '../mixins/pointerScroll.js'
@@ -148,6 +156,7 @@ import uniqueId from '../utility/uniqueId.js'
  * @name VueSelect
  */
 export default {
+	name: 'VueSelect',
   components: { ...childComponents },
 
   directives: { appendToBody },
@@ -162,8 +171,7 @@ export default {
      * @type {Object||String||null}
      */
     // eslint-disable-next-line vue/require-default-prop,vue/require-prop-types
-    value: {},
-
+    value: [Array, String, Number, Object],
     /**
      * An object with any custom components that you'd like to overwrite
      * the default implementation of in your app. The keys in this object
@@ -782,6 +790,7 @@ export default {
         },
         noOptions: {
           search: this.search,
+          // was replaced with this.loading in our version
           loading: this.mutableLoading,
           searching: this.searching,
         },
@@ -821,6 +830,7 @@ export default {
       return {
         'vs--open': this.dropdownOpen,
         'vs--single': !this.multiple,
+        // was deleted in our vesrion
         'vs--multiple': this.multiple,
         'vs--searching': this.searching && !this.noDrop,
         'vs--searchable': this.searchable && !this.noDrop,
