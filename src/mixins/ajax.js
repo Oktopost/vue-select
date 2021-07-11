@@ -1,24 +1,24 @@
 export default {
-  props: {
-    /**
+	props: {
+		/**
      * Toggles the adding of a 'loading' class to the main
      * .v-select wrapper. Useful to control UI state when
      * results are being processed through AJAX.
      */
-    loading: {
-      type: Boolean,
-      default: false,
-    },
-  },
+		loading: {
+			type: Boolean,
+			default: false,
+		},
+	},
 
-  data() {
+  data () {
     return {
       mutableLoading: false,
-    }
+    };
   },
 
-  watch: {
-    /**
+	watch: {
+		/**
      * Anytime the search string changes, emit the
      * 'search' event. The event is passed with two
      * parameters: the search string, and a function
@@ -27,19 +27,21 @@ export default {
      *
      * @emits search
      */
-    search() {
-      this.$emit('search', this.search, this.toggleLoading)
-    },
+		search ()
+		{
+			this.$emit('search', this.search, this.toggleLoading);
+		},
 
-    /**
+		/**
      * Sync the loading prop with the internal
      * mutable loading value.
      * @param val
      */
-    loading(val) {
-      this.mutableLoading = val
-    },
-  },
+		loading (val)
+		{
+			this.mutableLoading = val;
+		},
+	},
 
   methods: {
     /**
@@ -49,11 +51,13 @@ export default {
      * @param toggle Boolean
      * @returns {*}
      */
-    toggleLoading(toggle = null) {
-      if (toggle == null) {
-        return (this.mutableLoading = !this.mutableLoading)
-      }
-      return (this.mutableLoading = toggle)
-    },
-  },
-}
+		toggleLoading (toggle = null)
+		{
+			if (toggle == null)
+			{
+				return (this.mutableLoading = !this.mutableLoading);
+			}
+			return (this.mutableLoading = toggle);
+		},
+	},
+};

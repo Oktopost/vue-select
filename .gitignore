@@ -25,6 +25,5 @@ coverage
 dist
 test/unit/coverage
 package-lock.json
-dev/dist
 docs/.vuepress/dist
 .netlify
