@@ -37,19 +37,17 @@
 							v-bind="normalizeOptionForSlot(option)">
 							{{ getOptionLabel(option) }}
 						</slot>
-						<button
+						<span
 							v-if="multiple"
 							ref="deselectButtons"
-							:disabled="disabled"
-							type="button"
 							class="vs__deselect"
 							:title="`Deselect ${getOptionLabel(option)}`"
 							:aria-label="`Deselect ${getOptionLabel(option)}`"
-							@click="deselect(option)">
+							@click.prevent="disabled ? null : deselect(option)">
 							<slot name="deselect">
 								<component :is="childComponents.Deselect" />
 							</slot>
-						</button>
+						</span>
 					</span>
 				</slot>
 
@@ -66,19 +64,17 @@
 			<div
 				ref="actions"
 				class="vs__actions">
-				<button
+				<span
 					v-show="showClearButton"
 					ref="clearButton"
-					:disabled="disabled"
-					type="button"
 					class="vs__clear"
 					title="Clear Selected"
 					aria-label="Clear Selected"
-					@click="clearSelection">
+					@click.prevent="disabled ? null : clearSelection">
 					<slot name="deselect">
 						<component :is="childComponents.Deselect" />
 					</slot>
-				</button>
+				</span>
 
 				<slot
 					name="open-indicator"
