@@ -95,6 +95,8 @@
         class="vs__dropdown-menu"
         role="listbox"
         tabindex="-1"
+        @mouseleave="onMouseleave"
+        @mouseenter="onMouseenter"
         @mousedown.prevent="onMousedown"
         @mouseup.stop="onMouseUp"
       >
@@ -1317,7 +1319,13 @@ export default {
     onMouseUp() {
       this.mousedown = false
     },
+    onMouseenter({buttons}) {
+      if (buttons) this.mousedown = true
+    },
 
+    onMouseleave({buttons}) {
+      if (buttons) this.mousedown = false
+    },
     /**
      * Search <input> KeyBoardEvent handler.
      * @param {KeyboardEvent} e
