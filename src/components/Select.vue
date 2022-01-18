@@ -107,7 +107,7 @@
 				role="listbox"
 				tabindex="-1"
 				@mousedown.prevent="onMousedown"
-				@mouseup="onMouseUp">
+				@mouseup.stop="onMouseUp">
 				<slot
 					name="list-header"
 					v-bind="scope.listHeader" />
@@ -126,7 +126,7 @@
           }"
 					:aria-selected="index === typeAheadPointer ? true : null"
 					@mouseover="selectable(option) ? (typeAheadPointer = index) : null"
-					@mouseup.prevent.stop="selectable(option) ? select(option) : null">
+					@mouseup.prevent="selectable(option) ? select(option) : null">
 					<slot
 						name="option"
 						v-bind="normalizeOptionForSlot(option)">
