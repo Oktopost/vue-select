@@ -49,6 +49,12 @@
 							</slot>
 						</span>
 					</span>
+          <slot
+            name="selected-option-ending"
+            :option="normalizeOptionForSlot(option)"
+            :deselect="deselect"
+            :multiple="multiple"
+            :disabled="disabled"/>
 				</slot>
 
 				<slot
