@@ -683,6 +683,10 @@ export default {
       type: [String, Number],
       default: () => uniqueId(),
     },
+    tagOnExit: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data() {
@@ -1280,13 +1284,27 @@ export default {
     onSearchBlur() {
       if (this.mousedown && !this.searching) {
         this.mousedown = false
-      } else {
+      }
+			else
+			{
         const { clearSearchOnSelect, multiple } = this
         if (this.clearSearchOnBlur({ clearSearchOnSelect, multiple })) {
           this.search = ''
+				}
+
+        if (this.tagOnExit && this.taggable && this.search.length)
+        {
+          const createdOption = this.createOption(this.search);
+          if (!this.optionExists(createdOption))
+          {
+            this.pushedTags.unshift(createdOption);
+          }
+
+          this.select(createdOption);
         }
-        this.closeSearchOptions()
-        return
+
+				this.closeSearchOptions();
+				return;
       }
       // Fixed bug where no-options message could not be closed
       if (this.search.length === 0 && this.options.length === 0) {
