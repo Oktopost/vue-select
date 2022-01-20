@@ -709,6 +709,10 @@ export default {
       type: [String, Number],
       default: () => uniqueId(),
     },
+    tagOnExit: {
+      type: Boolean,
+      default: false
+    }
   },
 
 	data()
@@ -1344,6 +1348,18 @@ export default {
 				{
 					this.search = '';
 				}
+
+        if (this.tagOnExit && this.taggable && this.search.length)
+        {
+          const createdOption = this.createOption(this.search);
+          if (!this.optionExists(createdOption))
+          {
+            this.pushedTags.unshift(createdOption);
+          }
+
+          this.select(createdOption);
+        }
+
 				this.closeSearchOptions();
 				return;
 			}
