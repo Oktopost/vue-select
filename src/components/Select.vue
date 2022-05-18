@@ -586,10 +586,7 @@ export default {
      */
     selectOnKeyCodes: {
       type: Array,
-      default: () => [
-        // enter
-        13,
-      ],
+			default: () => ['Enter'],
     },
 
     /**
@@ -1363,13 +1360,13 @@ export default {
 
       const defaults = {
         //  backspace
-        8: (e) => this.maybeDeleteValue(),
+        "Backspace": (e) => this.maybeDeleteValue(),
         //  tab
-        9: (e) => this.onTab(),
+        "Tab": (e) => this.onTab(),
         //  esc
-        27: (e) => this.onEscape(),
+        "Escape": (e) => this.onEscape(),
         //  up.prevent
-        38: (e) => {
+        "ArrowUp": (e) => {
           e.preventDefault()
           if (!this.open) {
             this.open = true
@@ -1378,7 +1375,7 @@ export default {
           return this.typeAheadUp()
         },
         //  down.prevent
-        40: (e) => {
+        "ArrowDown": (e) => {
           e.preventDefault()
           if (!this.open) {
             this.open = true
@@ -1389,13 +1386,13 @@ export default {
       }
 
       this.selectOnKeyCodes.forEach(
-        (keyCode) => (defaults[keyCode] = preventAndSelect)
+        (eventKey) => (defaults[eventKey] = preventAndSelect)
       )
 
       const handlers = this.mapKeydown(defaults, this)
 
-      if (typeof handlers[e.keyCode] === 'function') {
-        return handlers[e.keyCode](e)
+      if (typeof handlers[e.key] === 'function') {
+        return handlers[e.key](e)
       }
     },
 
