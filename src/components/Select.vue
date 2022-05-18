@@ -613,7 +613,7 @@ export default {
        */
 		selectOnKeyCodes: {
 			type: Array,
-			default: () => [13],
+			default: () => ['Enter'],
 		},
 
 		/**
@@ -1416,46 +1416,46 @@ export default {
        * @param e {KeyboardEvent}
        * @return {Function}
        */
-		onSearchKeyDown (e)
-		{
-			const preventAndSelect = (e) =>
-			{
-				e.preventDefault()
-				return !this.isComposing && this.typeAheadSelect()
-			}
+    onSearchKeyDown (e)
+    {
+      const preventAndSelect = (e) =>
+      {
+        e.preventDefault()
+        return !this.isComposing && this.typeAheadSelect()
+      }
 
-			const defaults = {
-				//  backspace
-        8: (e) => this.maybeDeleteValue(),
-				//  tab
-        9: (e) => this.onTab(),
-				//  esc
-        27: (e) => this.onEscape(),
-				//  up.prevent
-				38: e =>
-				{
-					e.preventDefault();
-					return this.typeAheadUp();
-				},
-				//  down.prevent
-				40: (e) =>
-				{
-					e.preventDefault()
-					return this.typeAheadDown()
-				},
+      const defaults = {
+        //  backspace
+        "Backspace": (e) => this.maybeDeleteValue(),
+        //  tab
+        "Tab": (e) => this.onTab(),
+        //  esc
+        "Escape": (e) => this.onEscape(),
+        //  up.prevent
+        "ArrowUp": e =>
+                   {
+                     e.preventDefault();
+                     return this.typeAheadUp();
+                   },
+        //  down.prevent
+        "ArrowDown": (e) =>
+                     {
+                       e.preventDefault()
+                       return this.typeAheadDown()
+                     },
       }
 
       this.selectOnKeyCodes.forEach(
-        (keyCode) => (defaults[keyCode] = preventAndSelect)
+        (eventKey) => (defaults[eventKey] = preventAndSelect)
       )
 
       const handlers = this.mapKeydown(defaults, this)
 
-			if (typeof handlers[e.keyCode] === 'function')
-			{
-				return handlers[e.keyCode](e)
-			}
-		},
+      if (typeof handlers[e.key] === 'function')
+      {
+        return handlers[e.key](e)
+      }
+    },
 	},
 
 };
