@@ -71,8 +71,7 @@
           class="vs__clear"
           title="Clear Selected"
           aria-label="Clear Selected"
-					@click.prevent="disabled ? null : clearSelection"
-        >
+					@click.prevent="handleDeselect">
           <slot name="deselect">
             <component :is="childComponents.Deselect" />
           </slot>
@@ -1047,6 +1046,15 @@ export default {
       this.$emit('option:deselected', option)
     },
 
+    handleDeselect()
+    {
+      if (this.disabled)
+      {
+        return;
+      }
+
+      this.clearSelection();
+    },
     /**
      * Clears the currently selected value(s)
      * @return {void}
@@ -1284,10 +1292,7 @@ export default {
       }
 			else
 			{
-        const { clearSearchOnSelect, multiple } = this
-        if (this.clearSearchOnBlur({ clearSearchOnSelect, multiple })) {
-          this.search = ''
-				}
+
 
         if (this.tagOnExit && this.taggable && this.search.length)
         {
@@ -1298,6 +1303,11 @@ export default {
           }
 
           this.select(createdOption);
+        }
+
+        const { clearSearchOnSelect, multiple } = this
+        if (this.clearSearchOnBlur({ clearSearchOnSelect, multiple })) {
+          this.search = ''
         }
 
 				this.closeSearchOptions();
