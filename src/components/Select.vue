@@ -111,6 +111,7 @@
 				v-append-to-body
 				class="vs__dropdown-menu"
 				role="listbox"
+        aria-details="Select dropdown"
 				tabindex="-1"
         @mouseleave="onMouseleave"
         @mouseenter="onMouseenter"
