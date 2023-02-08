@@ -1013,9 +1013,9 @@ export default {
      * @param  {Object|String} option
      * @return {void}
      */
-    select(option) {
-      if (!this.ulMouseDown) {
-        return
+		select(option, force = false) {
+      if (!this.ulMouseDown && !force) {
+        return;
       }
 
       this.$emit('option:selecting', option)
@@ -1310,7 +1310,7 @@ export default {
             this.pushedTags.unshift(createdOption);
           }
 
-          this.select(createdOption);
+          this.select(createdOption, true);
         }
 
         const { clearSearchOnSelect, multiple } = this
