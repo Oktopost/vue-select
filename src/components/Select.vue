@@ -1049,9 +1049,9 @@ export default {
        * @param  {Object|String} option
        * @return {void}
      */
-		select(option)
+		select(option, force = false)
 		{
-      if (!this.ulMouseDown)
+      if (!this.ulMouseDown && !force)
       {
         return;
       }
@@ -1371,7 +1371,7 @@ export default {
             this.pushedTags.unshift(createdOption);
           }
 
-          this.select(createdOption);
+          this.select(createdOption, true);
         }
 
         const { clearSearchOnSelect, multiple } = this;
