@@ -688,6 +688,7 @@ export default {
 
   data() {
     return {
+      ulMouseDown: false,
       search: '',
       open: false,
       isComposing: false,
@@ -1013,6 +1014,10 @@ export default {
      * @return {void}
      */
     select(option) {
+      if (!this.ulMouseDown) {
+        return
+      }
+
       this.$emit('option:selecting', option)
       if (!this.isOptionSelected(option)) {
         if (this.taggable && !this.optionExists(option)) {
@@ -1113,6 +1118,8 @@ export default {
      * @return {void}
      */
     toggleDropdown(event) {
+      this.ulMouseDown = false;
+
       const targetIsNotSearch = event.target !== this.searchEl
       if (targetIsNotSearch) {
         event.preventDefault()
@@ -1340,7 +1347,8 @@ export default {
      * @return {void}
      */
     onMousedown() {
-      this.mousedown = true
+     this.ulMouseDown = true;
+			this.mousedown = true;
     },
 
     /**
