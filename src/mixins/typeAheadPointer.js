@@ -66,7 +66,7 @@ export default {
 
 			if (typeAheadOption)
 			{
-				this.select(typeAheadOption);
+				this.select(typeAheadOption, true);
 			}
 		}
 	}
