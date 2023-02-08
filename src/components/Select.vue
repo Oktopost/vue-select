@@ -719,6 +719,7 @@ export default {
 	data()
 	{
 		return {
+      ulMouseDown: false,
       search: '',
       open: false,
       isComposing: false,
@@ -1050,6 +1051,11 @@ export default {
      */
 		select(option)
 		{
+      if (!this.ulMouseDown)
+      {
+        return;
+      }
+
 			this.$emit('option:selecting', option);
 			if (!this.isOptionSelected(option))
 			{
@@ -1162,6 +1168,8 @@ export default {
        */
 		toggleDropdown (event)
 		{
+      this.ulMouseDown = false;
+
 			const targetIsNotSearch = event.target !== this.searchEl
 			if (targetIsNotSearch)
 			{
@@ -1404,6 +1412,7 @@ export default {
        */
 		onMousedown()
 		{
+      this.ulMouseDown = true;
 			this.mousedown = true;
 		},
 
