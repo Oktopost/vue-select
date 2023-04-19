@@ -1366,12 +1366,16 @@ export default {
         if (this.tagOnExit && this.taggable && this.search.length)
         {
           const createdOption = this.createOption(this.search);
-          if (!this.optionExists(createdOption))
-          {
-            this.pushedTags.unshift(createdOption);
-          }
 
-          this.select(createdOption, true);
+          if (this.selectable(createdOption))
+          {
+            if (!this.optionExists(createdOption))
+            {
+              this.pushedTags.unshift(createdOption);
+            }
+
+            this.select(createdOption, true);
+          }
         }
 
         const { clearSearchOnSelect, multiple } = this;
