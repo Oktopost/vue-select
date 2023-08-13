@@ -428,7 +428,7 @@ export default {
      * Enable/disable trim for tag.
      * @type {Boolean}
      */
-    trimTag: {
+    trimSearch: {
       type: Boolean,
       default: true,
     },
@@ -902,11 +902,12 @@ export default {
         return optionList
       }
 
-      let options = this.search.length
-        ? this.filter(optionList, this.search, this)
+      let search = this.trimSearch ? this.search.trim() : this.search;
+      let options = search.length
+        ? this.filter(optionList, search, this)
         : optionList
-      if (this.taggable && this.search.length) {
-        const createdOption = this.createOption(this.search)
+      if (this.taggable && search.length) {
+        const createdOption = this.createOption(search)
         if (!this.optionExists(createdOption)) {
           options.unshift(createdOption)
         }
@@ -1309,9 +1310,10 @@ export default {
       }
 			else
 			{
-        if (this.tagOnExit && this.taggable && this.search.trim().length)
+        let search = this.trimSearch ? this.search.trim() : this.search;
+        if (this.tagOnExit && this.taggable && search.length)
         {
-          const createdOption = this.createOption(this.search.trim());
+          const createdOption = this.createOption(search);
 
           if (this.selectable(createdOption))
           {
