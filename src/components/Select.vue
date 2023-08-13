@@ -425,6 +425,15 @@ export default {
     },
 
     /**
+     * Enable/disable trim for tag.
+     * @type {Boolean}
+     */
+    trimTag: {
+      type: Boolean,
+      default: true,
+    },
+
+    /**
      * Set the tabindex for the input field.
      * @type {Number}
      */
@@ -1300,11 +1309,9 @@ export default {
       }
 			else
 			{
-
-
-        if (this.tagOnExit && this.taggable && this.search.length)
+        if (this.tagOnExit && this.taggable && this.search.trim().length)
         {
-          const createdOption = this.createOption(this.search);
+          const createdOption = this.createOption(this.search.trim());
 
           if (this.selectable(createdOption))
           {
