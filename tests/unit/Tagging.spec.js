@@ -231,7 +231,7 @@ describe('When Tagging Is Enabled', () => {
 
     await selectTag(Select, 'one')
     expect(Select.vm.selectedValue).toEqual([{ label: 'one' }])
-    expect(spy).lastCalledWith({ label: 'one' })
+    expect(spy).lastCalledWith({ label: 'one' }, true)
     expect(Select.vm.search).toEqual('')
 
     await selectTag(Select, 'one')

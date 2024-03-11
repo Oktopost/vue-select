@@ -71,7 +71,8 @@ describe('Removing values', () => {
     Select.vm.open = true
     await Select.vm.$nextTick()
 
-    Select.find('.vs__dropdown-option--selected').trigger('click')
+    Select.find('.vs__dropdown-option--selected').trigger('mousedown')
+    Select.find('.vs__dropdown-option--selected').trigger('mouseup')
     await Select.vm.$nextTick()
 
     expect(deselect).toHaveBeenCalledWith('one')
@@ -139,7 +140,7 @@ describe('Removing values', () => {
       Select.vm.$data._value = 'foo'
 
       expect(Select.vm.selectedValue).toEqual(['foo'])
-      Select.find('button.vs__clear').trigger('click')
+      Select.find('span.vs__clear').trigger('click')
 
       expect(Select.emitted().input).toEqual([[null]])
       expect(Select.vm.selectedValue).toEqual([])
@@ -152,8 +153,8 @@ describe('Removing values', () => {
         disabled: true,
       })
 
-      expect(Select.find('button.vs__clear').attributes().disabled).toEqual(
-        'disabled'
+      expect(Select.find('span.vs__clear').attributes()['aria-disabled']).toEqual(
+        "true"
       )
     })
   })

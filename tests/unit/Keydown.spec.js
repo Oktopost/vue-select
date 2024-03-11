@@ -4,22 +4,22 @@ describe('Custom Keydown Handlers', () => {
   it('can use the map-keydown prop to trigger custom behaviour', () => {
     const onKeyDown = jest.fn()
     const Select = mountDefault({
-      mapKeydown: (defaults, vm) => ({ ...defaults, 32: onKeyDown }),
+      mapKeydown: (defaults, vm) => ({ ...defaults, ' ': onKeyDown }),
     })
 
-    Select.findComponent({ ref: 'search' }).trigger('keydown.space')
+    Select.findComponent({ ref: 'search' }).trigger('keydown', { key: ' ' })
 
     expect(onKeyDown.mock.calls.length).toBe(1)
   })
 
   it('selectOnKeyCodes should trigger a selection for custom keycodes', () => {
     const Select = mountDefault({
-      selectOnKeyCodes: [32],
+      selectOnKeyCodes: [' '],
     })
 
     const spy = jest.spyOn(Select.vm, 'typeAheadSelect')
 
-    Select.findComponent({ ref: 'search' }).trigger('keydown.space')
+    Select.findComponent({ ref: 'search' }).trigger('keydown', { key: ' ' })
 
     expect(spy).toHaveBeenCalledTimes(1)
   })
@@ -27,8 +27,8 @@ describe('Custom Keydown Handlers', () => {
   it('even works when combining selectOnKeyCodes with map-keydown', () => {
     const onKeyDown = jest.fn()
     const Select = mountDefault({
-      mapKeydown: (defaults, vm) => ({ ...defaults, 32: onKeyDown }),
-      selectOnKeyCodes: [9],
+      mapKeydown: (defaults, vm) => ({ ...defaults, ' ': onKeyDown }),
+      selectOnKeyCodes: ['Tab'],
     })
 
     const spy = jest.spyOn(Select.vm, 'typeAheadSelect')

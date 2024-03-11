@@ -103,7 +103,7 @@ describe('Toggling Dropdown', () => {
     })
 
     Select.vm.open = true
-    Select.vm.select('one')
+    Select.vm.select('one', true)
 
     expect(Select.vm.open).toEqual(false)
   })
@@ -117,7 +117,7 @@ describe('Toggling Dropdown', () => {
     })
 
     Select.vm.open = true
-    Select.vm.select('one')
+    Select.vm.select('one', true)
 
     expect(Select.vm.open).toEqual(true)
   })

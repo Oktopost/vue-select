@@ -34,8 +34,8 @@
 						<span
               v-if="multiple"
               ref="deselectButtons"
-							:disabled="disabled"
-							type="button"
+							:aria-disabled="disabled"
+              role="button"
               class="vs__deselect"
               :title="`Deselect ${getOptionLabel(option)}`"
               :aria-label="`Deselect ${getOptionLabel(option)}`"
@@ -67,10 +67,11 @@
         <span
           v-show="showClearButton"
           ref="clearButton"
-					ref="clearButton"
+          role="button"
           class="vs__clear"
           title="Clear Selected"
           aria-label="Clear Selected"
+          :aria-disabled="disabled"
 					@click.prevent="handleDeselect">
           <slot name="deselect">
             <component :is="childComponents.Deselect" />
@@ -1397,6 +1398,7 @@ export default {
         "Tab": (e) => this.onTab(),
         //  esc
         "Escape": (e) => this.onEscape(),
+        "Esc": (e) => this.onEscape(),
         //  up.prevent
         "ArrowUp": (e) => {
           e.preventDefault()
