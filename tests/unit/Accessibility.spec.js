@@ -21,7 +21,7 @@ describe('Search Slot Scope', () => {
     })
 
     it("adds the active descendant attribute when there's a typeahead value and an open dropdown", async () => {
-      const Select = mountDefault()
+      const Select = mountDefault({ value: 'three' }, ['one', 'two', 'three'])
 
       Select.vm.open = true
       Select.vm.typeAheadPointer = 1
@@ -29,7 +29,7 @@ describe('Search Slot Scope', () => {
 
       expect(
         Select.vm.scope.search.attributes['aria-activedescendant']
-      ).toEqual(`vs${Select.vm.uid}__option-1`)
+      ).toEqual(`vs${Select.vm.uid}__option-2`)
     })
   })
 })

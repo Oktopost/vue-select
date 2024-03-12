@@ -45,7 +45,7 @@ describe('When reduce prop is defined', () => {
       },
     })
 
-    Select.vm.select({ id: 'foo', label: 'FooBar' })
+    Select.vm.select({ id: 'foo', label: 'FooBar' }, true)
 
     expect(
       Select.vm.isOptionSelected({
@@ -144,7 +144,7 @@ describe('When reduce prop is defined', () => {
       { label: 'This is Foo', value: 'foo' },
     ])
 
-    Select.select({ label: 'This is Bar', value: 'bar' })
+    Select.select({ label: 'This is Bar', value: 'bar' }, true)
     await Select.$nextTick()
     expect(Parent.vm.value).toEqual('bar')
     expect(Select.selectedValue).toEqual([
@@ -152,7 +152,7 @@ describe('When reduce prop is defined', () => {
     ])
 
     // Parent denies to set baz
-    Select.select({ label: 'This is Baz', value: 'baz' })
+    Select.select({ label: 'This is Baz', value: 'baz' }, true)
     await Select.$nextTick()
     expect(Select.selectedValue).toEqual([
       { label: 'This is Bar', value: 'bar' },
@@ -245,7 +245,7 @@ describe('When reduce prop is defined', () => {
         },
       })
 
-      Select.vm.select(nestedOption)
+      Select.vm.select(nestedOption, true)
       expect(Select.vm.isOptionSelected(nestedOption)).toEqual(true)
     })
   })

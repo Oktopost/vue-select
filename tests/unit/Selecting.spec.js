@@ -119,19 +119,19 @@ describe('VS - Selecting Values', () => {
     const select = Select.vm
     expect(select.isValueEmpty).toEqual(true)
 
-    select.select(['one'])
+    select.select(['one'], true)
     expect(select.isValueEmpty).toEqual(false)
 
-    select.select('one')
+    select.select('one', true)
     expect(select.isValueEmpty).toEqual(false)
 
-    select.select({ label: 'foo', value: 'foo' })
+    select.select({ label: 'foo', value: 'foo' }, true)
     expect(select.isValueEmpty).toEqual(false)
 
-    select.select('')
+    select.select('', true)
     expect(select.isValueEmpty).toEqual(true)
 
-    select.select(null)
+    select.select(null, true)
     expect(select.isValueEmpty).toEqual(true)
   })
 
@@ -184,7 +184,7 @@ describe('VS - Selecting Values', () => {
     expect(Select.value).toEqual('foo')
     expect(Select.selectedValue).toEqual(['foo'])
 
-    Select.select('bar')
+    Select.select('bar', true)
     expect(Parent.vm.value).toEqual('bar')
   })
 
@@ -207,16 +207,34 @@ describe('VS - Selecting Values', () => {
     ]
     const Select = mountDefault({ options, multiple: true })
 
-    Select.vm.select({ label: 'one', id: 1 })
-    Select.vm.select({ label: 'one', id: 2 })
+    Select.vm.select({ label: 'one', id: 1 }, true)
+    Select.vm.select({ label: 'one', id: 2 }, true)
 
     expect(Select.vm.selectedValue).toEqual(options)
+  })
+
+  it('can select a false boolean option', async () => {
+    const Select = mountDefault({
+      options: [false],
+    })
+
+    expect(Select.vm.isOptionSelected(false)).toBeFalsy()
+    expect(Select.vm.optionExists(false)).toBeTruthy()
+
+    Select.vm.open = true
+    await Select.vm.$nextTick()
+
+    Select.find('.vs__dropdown-option').trigger('mousedown')
+    Select.find('.vs__dropdown-option').trigger('mouseup')
+    await Select.vm.$nextTick()
+
+    expect(Select.vm.selectedValue).toEqual([false])
   })
 
   describe('input Event', () => {
     it('will trigger the input event when the selection changes', () => {
       const Select = shallowMount(VueSelect)
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
       expect(Select.emitted('input')[0]).toEqual(['bar'])
     })
 
@@ -224,7 +242,7 @@ describe('VS - Selecting Values', () => {
       const Select = shallowMount(VueSelect, {
         propsData: { multiple: true, value: ['foo'], options: ['foo', 'bar'] },
       })
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
       expect(Select.emitted('input')[0]).toEqual([['foo', 'bar']])
     })
 
@@ -237,7 +255,7 @@ describe('VS - Selecting Values', () => {
         },
       })
 
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
       expect(Select.emitted('input')).toBeFalsy()
     })
   })
@@ -245,7 +263,7 @@ describe('VS - Selecting Values', () => {
   describe('option:selecting Event', () => {
     it('will trigger the option:selecting event when an option is selected', () => {
       const Select = shallowMount(VueSelect)
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
       expect(Select.emitted('option:selecting')[0]).toEqual(['bar'])
     })
 
@@ -253,8 +271,8 @@ describe('VS - Selecting Values', () => {
       const Select = shallowMount(VueSelect, {
         propsData: { value: ['foo'], options: ['foo', 'bar'] },
       })
-      Select.vm.select('foo')
-      Select.vm.select('bar')
+      Select.vm.select('foo', true)
+      Select.vm.select('bar', true)
       expect(Select.emitted('option:selecting')).toEqual([['foo'], ['bar']])
     })
 
@@ -262,7 +280,7 @@ describe('VS - Selecting Values', () => {
       const Select = shallowMount(VueSelect, {
         propsData: { multiple: true, value: ['foo'], options: ['foo', 'bar'] },
       })
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
       expect(Select.emitted('option:selecting')[0]).toEqual(['bar'])
     })
 
@@ -274,8 +292,8 @@ describe('VS - Selecting Values', () => {
           options: ['foo', 'bar'],
         },
       })
-      Select.vm.select('bar')
-      Select.vm.select('bar')
+      Select.vm.select('bar', true)
+      Select.vm.select('bar', true)
       expect(Select.emitted('option:selecting')).toEqual([['bar'], ['bar']])
     })
   })
