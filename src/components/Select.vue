@@ -37,7 +37,6 @@
 							:aria-disabled="disabled"
               role="button"
               class="vs__deselect"
-              :title="`Deselect ${getOptionLabel(option)}`"
               :aria-label="`Deselect ${getOptionLabel(option)}`"
 							@click.prevent="disabled ? null : deselect(option)"
             >
@@ -69,7 +68,6 @@
           ref="clearButton"
           role="button"
           class="vs__clear"
-          title="Clear Selected"
           aria-label="Clear Selected"
           :aria-disabled="disabled"
 					@click.prevent="handleDeselect">
