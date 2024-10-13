@@ -41,7 +41,6 @@
 							v-if="multiple"
 							ref="deselectButtons"
 							class="vs__deselect"
-							:title="`Deselect ${getOptionLabel(option)}`"
 							:aria-label="`Deselect ${getOptionLabel(option)}`"
 							@click.prevent="disabled ? null : deselect(option)">
 							<slot name="deselect">
@@ -74,7 +73,6 @@
 					v-show="showClearButton"
 					ref="clearButton"
 					class="vs__clear"
-					title="Clear Selected"
 					aria-label="Clear Selected"
 					@click.prevent="handleDeselect">
 					<slot name="deselect">
